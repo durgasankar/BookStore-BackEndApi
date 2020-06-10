@@ -287,7 +287,6 @@ public class OrderServiceImpl implements IOrderservice {
 		if (verifyUser(token)) {
 			List<Cart> orders = orderDao.getUsersOrderList(userData.getUId());
 
-			List<Quantity> booksQty = new ArrayList<Quantity>();
 
 			HashMap<Integer, List<Book>> booksList = new HashMap<>();
 			orders.forEach(order -> {
@@ -321,15 +320,14 @@ public class OrderServiceImpl implements IOrderservice {
 				});
 			});
 
-//			List<OrderDTO> orderResponse = new ArrayList<>();
 			List<PlacedOrderDetail> placedOrders = new ArrayList<>();
 
 			orders.forEach(order -> {
 				
-//				orderDto.setOrders(order.getBooksList());
 				order.getBooksList().forEach(book -> {
 					PlacedOrderDetail orderDto = new PlacedOrderDetail();
 					orderDto.setInvoiceNumber(order.getInvoiceNumber());
+					orderDto.setCreatedTime(order.getCreatedTime());
 					orderDto.setBookId(book.getBookId());
 					orderDto.setBookName(book.getBookName());
 					orderDto.setAuthorName(book.getAuthorName());
@@ -340,7 +338,6 @@ public class OrderServiceImpl implements IOrderservice {
 				});
 				
 			});
-//			List<PlacedOrderDetail> placedOrders = new ArrayList<>();
 			
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new OrderResponse(placedOrders));
 		} else {

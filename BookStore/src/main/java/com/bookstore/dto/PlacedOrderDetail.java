@@ -16,4 +16,5 @@ public class PlacedOrderDetail {
 	private double price;
 	private int quantity;
 	private int userId;
+	private String createdTime;
 }
